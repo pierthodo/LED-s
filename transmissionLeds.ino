@@ -8,11 +8,13 @@ CRGB leds[NUM_LEDS];
 int incomingByte = 0;
 boolean beat;
 int bright;
+
+//setup the arduino board and serial
 void setup() {
  Serial.begin(9600); 
  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
-
+// calling all the different methode , there is another version where it is random 
 void loop() {
   mcgillColor();
   colorSwipe();
