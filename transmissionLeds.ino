@@ -1,3 +1,8 @@
+/*This code receive data from the Serial program when a beat is detected and the different normalized amplitude throughout the song
+According to that its going to impact the different pattern I've developed. Most of them won't make any sence if you don't run it
+with a strips of LED's. E-mail me at Pierthodo@gmail.com if you want some video of certain pattern */
+
+
 #include "FastLED.h"
 #include "math.h"
 #define NUM_LEDS 450
@@ -19,15 +24,11 @@ void loop() {
   mcgillColor();
   colorSwipe();
   randomPoint();
-  randomPoint();
-
   partStrip();
   createBullet();
   theaterChase();
-  
   reactBeatFull();
   //createBulletBis();
-
   //partStrip();
   //colorWipe();
   // createBullet();
@@ -37,7 +38,7 @@ void loop() {
   //testFreq();
   //theaterChase();
 }
-void mcgillColor(){
+void mcgillColor(){// turn the all strips with mcgill color and altern with different patern
  int count = 0;
  int red = 0;
  int white = 0;
@@ -46,7 +47,7 @@ void mcgillColor(){
         int red = 255;
         int white = 0;
    }
-    else{
+   else{
          int red = 0;
          int white = 255;
     }
@@ -71,7 +72,7 @@ void mcgillColor(){
     count++;
  }
 }
-void colorSwipe(){
+void colorSwipe(){//color swipe throughout the all strips 
  int count = 0;
  int change = random(1,1000);
  int colorRandom = random(1,255);
@@ -96,26 +97,18 @@ void colorSwipe(){
     }
  }
 }
-void randomPoint(){
+void randomPoint(){// this turns every leds of the strips one by one with a random color defined at the beginning
  for(int i = 0 ; i < 450 ; i++){
       leds[i].setHSV(0,0,0);
  }
  FastLED.show();
  int count = 0;
  int on1[150];
- //int on2[220]
  int color = random(1,255);
  for(int i = 0; i < 150 ; i++){
   on1[i] = i; 
  }
- /*for(int i = 0 ; i < 440 ; i++){
-   if(i<220){
-     on1[i] = i;
-   }
-   else{
-     on2[i] = i;
-   }
- } */
+
  for (int i = 0; i < 150; i++) {
     int j = i + random(1,2000) % (150 - i);
     int temp = on1[i];
@@ -123,8 +116,6 @@ void randomPoint(){
     on1[j] = temp;
   }
  while(count < 150){
-     
-     //int pos = count < 220:on1[count]?on2[count];
      leds[on1[count]*3].setHSV(color,255,255);
      leds[on1[count]*3+1].setHSV(color,255,255);
      leds[on1[count]*3+2].setHSV(color,255,255);
@@ -133,7 +124,7 @@ void randomPoint(){
      delay(10);
  }
 }
-void partStripLiving(){
+void partStripLiving(){//lighting up part of the strip for a short amount of time and changing after
  int count = 0; 
  while(count < 500){
   updateBeat(); 
@@ -171,12 +162,12 @@ void partStripLiving(){
   count++;
  }
 }
-void updateBeat(){
+void updateBeat(){//update the beat when it sees something written in the serial (coming from the serial program)
  beat = false;
  if (Serial.available() >= 1){ // this was == 4, more than one command may be waiting
        Serial.read();
         beat = true;
-       
+//////////////////////////////////////I am currently working on this part of the code to receive the amplitude and update it//////////////////////////////////////
        //bright = random(1,255);
        /*String num = "";
        while(1>0){
@@ -199,7 +190,7 @@ void updateBeat(){
      }
      //float freq=atof(cadena);  
 }
-void testFreq(){
+void testFreq(){//test methode
   bright = 255;
   int count = 0;
   while(count<10000){
@@ -282,43 +273,7 @@ void partStrip(){
     count++;
   }
 }
-/*void theaterChase() {
-  int count = 0;
-  int color = 255;
-  for (int j=0; j<1000; j++) {  //do 10 cycles of chasing
-    for (int q=0; q < 3; q++) {
-      for (int i=0; i < NUM_LEDS; i=i+3) {
-           leds[i+q].setHSV(color,255,255);
-      }
-      while(count <1001){
-        updateBeat();
-        if(beat){
-          color = random(1,255);  
-          for (int i=0; i < NUM_LEDS; i=i+3) {
-              leds[i+q].setHSV(color,255,255);
-          }
-        }
-        //FastLED.show();
-        if(count%1000== 0){
-          for (int i=0; i < NUM_LEDS;i=i+3) {
-                leds[i+q].setHSV(0,0,0);
-          }
-          count = 1;
-          for (int i=0; i < NUM_LEDS; i=i+3) {
-                leds[i+q].setHSV(color,255,255);
-          }
-         FastLED.show();
-         
-          //delay(50);
-         
-  
-        }
-        count++;
-      }
-      count = 0;
-    }
-  }
-}*/
+
 void createBullet(){
  int count = 0; 
  int countBullet = 0;
