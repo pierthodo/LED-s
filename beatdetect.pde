@@ -92,7 +92,7 @@ void setup() {
   background(0);
 
   minim = new Minim(this); //Sets up minim
- myPort = new Serial(this, Serial.list()[0], 9600);
+  myPort = new Serial(this, Serial.list()[0], 9600);//comment this line if you want to launch this program without connecting and arduino
 
   //in = minim.getLineIn(Minim.STEREO, 1024);
   in = minim.getLineIn(Minim.STEREO, 2048); //Gets values from mic (and soundcard?)
@@ -170,8 +170,6 @@ void draw() {
   beat = 0;
   for (int i = 0; i < beatBands; i += 1) {
     if (totalShort[i] > totalLong[i]*c[i] & count[i] > 7) { //If beat is detected
-     //myPort.write(" B1");
-
       if (count[i] > 12 & count[i] < 200) {
         beatCounterArray[beatCounterPosition%beatCounterArraySamples] = count[i];
         beatCounterPosition +=1;
@@ -200,16 +198,18 @@ void draw() {
   //println(threshold);
 
   if (beat > threshold & beatCounter > 15) {// en changeant le beat counter tu peux changer la sensitivity du programme
-    myPort.write('B');
+    myPort.write('B');//comment this line if you want to launch the program without connecting to an arduino
     backgroundChange(100);
     beatCounter = 0;
   }
 
-  
+  /////////////////////////////////////Currently working on normalizing the amplitude and sending it through serial///////////////////////////
   //resultToSerial = Float.toString(totalGlobal).substring(0,4)+resultToSerial ;
   //(normalize(totalGlobal));
   //myPort.write(Integer.toString(normalize(totalGlobal)) + " ");
   //myPort.write(resultToSerial);
+  
+  
   /////////////////////////////////////////////////////Calculate beat spreads///////////////////////////////////////////////////////////////////////////////////////////
 
   //average = beatCounterArraySamples/200 !!!
@@ -300,11 +300,6 @@ int mode(int[] array) {
     return maxEl;
 }
 
-//int index(int[] array, int number){
-// for (int i = 0; i < array.length; i++){
-// if (array[i] == number) return i;
-// }
-//}
 int normalize(double add){
    if(add>max){
       max = add;
@@ -317,7 +312,6 @@ int normalize(double add){
       }
       else{
          return (int)(((add-min)/(max-min))*255);
-        
       }
    }
 }
