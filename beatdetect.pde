@@ -321,5 +321,3 @@ void stop() //Closes everything on stop
   minim.stop(); //Always stop Minim before exiting
   super.stop(); //This closes the sketch
 }
-
-
