@@ -259,7 +259,7 @@ void partStrip(){
   int brightness = 255;
   while(count < 1000){
    updateBeat(); 
-   if(random(1,20) == 2){
+   if(beat){
       for(int o = 0 ; o<NUM_LEDS ; o++){
            leds[o].setHSV(0,0,0);
       }
@@ -286,7 +286,7 @@ void createBullet(){
  while(count < 1500){
      updateBeat();
      int brightness = 255;
-     if(random(1,25) == 3){
+     if(beat){
          bullet[countBullet%(((NUM_LEDS-50)/6)-1)] = (NUM_LEDS/2);
          colorBullet[countBullet%(((NUM_LEDS-50)/6)-1)] = random(1,255);
          countBullet++;
